@@ -1,1 +1,1 @@
-Shell basic navigation commands
+Shell basic navigation command
