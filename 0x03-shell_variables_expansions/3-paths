@@ -1,3 +1,2 @@
 #!/bin/bash
-echo $PATH | tr ':' '\n' | wc -l
-Footer
+echo $((`echo $PATH | grep -o ":/" | wc -l`+ 1))
