@@ -1,10 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# ifconfig | awk -F "[: ]+" '/inet addr:/ { print $4 }'
+# Get all the interface names
+interfaces=$(ifconfig | grep -o '^[^ ][^ ]*:' | tr -d :)
 
-# OR
-# ifconfig | grep -Eo 'inet ([0-9]{1,3}\.?){4}' | cut -d ' ' -f 2
-
-# OR
-ifconfig -a | grep "inet addr" | cut -d " " -f12 | cut -d ":" -f
-
+# Loop through the interfaces
+for interface in $interfaces
+do
+  # Get the IPv4 address of the current interface
+  ip=$(ifconfig $interface | grep 'inet ' | awk '{print $2}')
+  
+  # Check if the current interface has an IPv4 address
+  if [ -n "$ip" ]
+  then
+    # Print the current interface and its IPv4 address
+    echo "$interface: $ip"
+  fi
